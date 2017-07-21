@@ -1,0 +1,23 @@
+{
+  "name": "pcm-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranabmitra/pcm-player.git"
+  },
+  "author": "pranab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranabmitra/pcm-player/issues"
+  },
+  "homepage": "https://github.com/pranabmitra/pcm-player#readme",
+  "dependencies": {
+    "ws": "^3.0.0"
+  }
+}
