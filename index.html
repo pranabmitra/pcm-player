@@ -6,18 +6,55 @@
 <title>PCM player</title>
 </head>
 <body>
-<div>
-    <button id="play-sinewave" type="button" onclick="play('test')">Play sound</button>
-</div>
-<hr />
-
+    <div>
+        <div>
+            <button id="playBtn" type="button" onclick="play('test')">Play sound</button>
+        </div>
+        <hr />
+        <br />
+        <div>
+           <label for="file">Choose a file(opus or aac) to play: </label>
+           <input type="file" id="file" name="file" accept=".aac, .opus">
+            
+            <br />
+           <button id="playFileBtn" type="button" onclick="playFromFile()" title="Play file">Play</button>
+        </div>
+    </div>
 <script type="text/javascript">
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)(),
+        channels = 1,
+        sounds = {},
+        source;
 
+    function playFromFile() {
 
-    var channels = 1;
+        source = audioCtx.createBufferSource();
 
-    var sounds = {};
+        /* Using File browser: opus check  */
+        var input = document.querySelector('input'),
+            reader = new FileReader();
+
+        if (input.files.length === 0) {
+            console.log('Choose a file');
+            return;
+        }
+        
+        reader.onload = function() {
+           var arrayBuffer = this.result,
+           array = new Uint8Array(arrayBuffer);
+
+           /* Play data from file using AudioContext */
+           audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+               source.buffer = buffer;
+
+               source.connect(audioCtx.destination);
+           });
+           source.start();
+      };
+
+      reader.readAsArrayBuffer(input.files[0]);
+
+    }
 
     function play(soundName) {
 
