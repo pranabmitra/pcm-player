@@ -1,124 +1,92 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PCM player</title>
-</head>
-<body>
-    <div>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PCM player</title>
+    </head>
+    <body>
         <div>
-            <button id="playBtn" type="button" onclick="play('test')">Play sound</button>
-        </div>
-        <hr />
-        <br />
-        <div>
-           <label for="file">Choose a file(opus or aac) to play: </label>
-           <input type="file" id="file" name="file" accept=".aac, .opus">
-            
+            <div>
+                <button id="playBtn" type="button" onclick="play('test')">Play sound</button>
+            </div>
+            <hr />
             <br />
-           <button id="playFileBtn" type="button" onclick="playFromFile()" title="Play file">Play</button>
+            <div>
+               <label for="file">Choose a file(opus or aac) to play: </label>
+               <input type="file" id="file" name="file" accept=".aac, .opus">
+                
+                <br />
+               <button id="playFileBtn" type="button" onclick="playFromFile()" title="Play file">Play</button>
+            </div>
         </div>
-    </div>
-<script type="text/javascript">
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)(),
-        channels = 1,
-        sounds = {},
-        source;
+        <script type="text/javascript">
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)(),
+                channels = 1,
+                sounds = {},
+                source;
 
-    function playFromFile() {
+            function playFromFile() {
 
-        source = audioCtx.createBufferSource();
+                source = audioCtx.createBufferSource();
 
-        /* Using File browser: opus check  */
-        var input = document.querySelector('input'),
-            reader = new FileReader();
+                /* Using File browser: opus check  */
+                var input = document.querySelector('input'),
+                    reader = new FileReader();
 
-        if (input.files.length === 0) {
-            console.log('Choose a file');
-            return;
-        }
-        
-        reader.onload = function() {
-           var arrayBuffer = this.result,
-           array = new Uint8Array(arrayBuffer);
+                if (input.files.length === 0) {
+                    console.log('Choose a file');
+                    return;
+                }
+                
+                reader.onload = function() {
+                   var arrayBuffer = this.result,
+                   array = new Uint8Array(arrayBuffer);
 
-           /* Play data from file using AudioContext */
-           audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-               source.buffer = buffer;
+                   /* Play data from file using AudioContext */
+                   audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+                       source.buffer = buffer;
 
-               source.connect(audioCtx.destination);
-           });
-           source.start();
-      };
+                       source.connect(audioCtx.destination);
+                   });
+                   source.start();
+              };
 
-      reader.readAsArrayBuffer(input.files[0]);
+              reader.readAsArrayBuffer(input.files[0]);
 
-    }
+            }
 
-    function play(soundName) {
+            function play(soundName) {
 
-        source = audioCtx.createBufferSource();
+                source = audioCtx.createBufferSource();
 
-        /* using arrayBuffer */
-        
-        <!-- var url = 'test.pcm'; -->
-        <!-- var xhr = new XMLHttpRequest(); -->
-        <!-- xhr.open('GET', url, true); -->
-        <!-- xhr.responseType = 'arraybuffer'; -->
-        <!-- xhr.send(); -->
+                /* using arrayBuffer */
+                
+                <!-- var url = 'test.pcm'; -->
+                <!-- var xhr = new XMLHttpRequest(); -->
+                <!-- xhr.open('GET', url, true); -->
+                <!-- xhr.responseType = 'arraybuffer'; -->
+                <!-- xhr.send(); -->
 
-        <!-- xhr.onload = function(e) { -->
-            <!-- if (xhr.status != 200) { -->
-              <!-- alert("Unexpected status code " + xhr.status + " for " + url); -->
-              <!-- return false; -->
-            <!-- } -->
-
-
-            <!-- var buf = new Uint8Array(xhr.response); -->
-
-            <!-- // Create an empty two second stereo buffer at the -->
-            <!-- // sample rate of the AudioContext -->
-            <!-- var frameCount = xhr.response.byteLength; // / 2; -->
-
-            <!-- var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000); -->
-            <!-- for (var channel = 0; channel < channels; channel++) { -->
-
-                <!-- var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000); -->
-                <!-- for (var i = 0; i < frameCount; i++) { -->
-                    <!-- var word = (buf[i * 2] & 0xff) + ((buf[i * 2 + 1] & 0xff) << 8); -->
-                    <!-- nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0; -->
-                <!-- } -->
-            <!-- } -->
-
-            <!-- source.buffer = myAudioBuffer; -->
-            <!-- source.connect(audioCtx.destination); -->
-            <!-- source.start(); -->
-       <!-- } -->
+                <!-- xhr.onload = function(e) { -->
+                    <!-- if (xhr.status != 200) { -->
+                      <!-- alert("Unexpected status code " + xhr.status + " for " + url); -->
+                      <!-- return false; -->
+                    <!-- } -->
 
 
-        /* using responseText */
-
-        <!-- var req = new XMLHttpRequest(); -->
-        <!-- var url = './test.pcm'; -->
-        <!-- req.open('GET', url, true); -->
-        <!-- req.overrideMimeType('text\/plain; charset=x-user-defined'); -->
-        <!-- req.onreadystatechange = function (aEvt) { -->
-            <!-- if (req.readyState == 4) { -->
-                <!-- if(req.status == 200) { -->
-                    <!-- var source = audioCtx.createBufferSource(); -->
-                    <!-- sounds[soundName] = req.responseText; -->
+                    <!-- var buf = new Uint8Array(xhr.response); -->
 
                     <!-- // Create an empty two second stereo buffer at the -->
                     <!-- // sample rate of the AudioContext -->
-                    <!-- var frameCount = sounds[soundName].length; // / 2; -->
+                    <!-- var frameCount = xhr.response.byteLength; // / 2; -->
 
                     <!-- var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000); -->
                     <!-- for (var channel = 0; channel < channels; channel++) { -->
 
                         <!-- var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000); -->
                         <!-- for (var i = 0; i < frameCount; i++) { -->
-                            <!-- var word = (sounds[soundName].charCodeAt(i * 2) & 0xff) + ((sounds[soundName].charCodeAt(i * 2 + 1) & 0xff) << 8); -->
+                            <!-- var word = (buf[i * 2] & 0xff) + ((buf[i * 2 + 1] & 0xff) << 8); -->
                             <!-- nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0; -->
                         <!-- } -->
                     <!-- } -->
@@ -126,55 +94,87 @@
                     <!-- source.buffer = myAudioBuffer; -->
                     <!-- source.connect(audioCtx.destination); -->
                     <!-- source.start(); -->
-                <!-- } else { -->
-                    <!-- alert('failed loading audio'); -->
-                <!-- } -->
-            <!-- } -->
-        <!-- }; -->
-        <!-- req.send(null); -->
-        
+               <!-- } -->
 
-        /* Get data from node server */
 
-        var ws = new WebSocket("ws://127.0.0.1:8002");
-        ws.binaryType = 'arraybuffer';
-        var lastStartTime = 0;
-        ws.onmessage = function(evt) {
-            console.log(evt.data);
+                /* using responseText */
 
-            if (evt.data.byteLength) {
+                <!-- var req = new XMLHttpRequest(); -->
+                <!-- var url = './test.pcm'; -->
+                <!-- req.open('GET', url, true); -->
+                <!-- req.overrideMimeType('text\/plain; charset=x-user-defined'); -->
+                <!-- req.onreadystatechange = function (aEvt) { -->
+                    <!-- if (req.readyState == 4) { -->
+                        <!-- if(req.status == 200) { -->
+                            <!-- var source = audioCtx.createBufferSource(); -->
+                            <!-- sounds[soundName] = req.responseText; -->
 
-                source = audioCtx.createBufferSource();
+                            <!-- // Create an empty two second stereo buffer at the -->
+                            <!-- // sample rate of the AudioContext -->
+                            <!-- var frameCount = sounds[soundName].length; // / 2; -->
 
-                var byteData = new Uint8Array(evt.data);
-                console.log(byteData);
+                            <!-- var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000); -->
+                            <!-- for (var channel = 0; channel < channels; channel++) { -->
 
-                // Create an empty two second stereo buffer at the
-                // sample rate of the AudioContext
-                var frameCount = byteData.length / 2 ;
+                                <!-- var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000); -->
+                                <!-- for (var i = 0; i < frameCount; i++) { -->
+                                    <!-- var word = (sounds[soundName].charCodeAt(i * 2) & 0xff) + ((sounds[soundName].charCodeAt(i * 2 + 1) & 0xff) << 8); -->
+                                    <!-- nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0; -->
+                                <!-- } -->
+                            <!-- } -->
 
-                var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000);
-                for (var channel = 0; channel < channels; channel++) {
+                            <!-- source.buffer = myAudioBuffer; -->
+                            <!-- source.connect(audioCtx.destination); -->
+                            <!-- source.start(); -->
+                        <!-- } else { -->
+                            <!-- alert('failed loading audio'); -->
+                        <!-- } -->
+                    <!-- } -->
+                <!-- }; -->
+                <!-- req.send(null); -->
+                
 
-                    var nowBuffering = myAudioBuffer.getChannelData(channel);
-                    for (var i = 0; i < frameCount; i++) {
-                        var word = (byteData[i * 2] & 0xff) + ((byteData[i * 2 + 1] & 0xff) << 8);
-                        nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0;
+                /* Get data from node server */
+
+                var ws = new WebSocket("ws://127.0.0.1:8002");
+                ws.binaryType = 'arraybuffer';
+                var lastStartTime = 0;
+                ws.onmessage = function(evt) {
+                    console.log(evt.data);
+
+                    if (evt.data.byteLength) {
+
+                        source = audioCtx.createBufferSource();
+
+                        var byteData = new Uint8Array(evt.data);
+                        console.log(byteData);
+
+                        // Create an empty two second stereo buffer at the
+                        // sample rate of the AudioContext
+                        var frameCount = byteData.length / 2 ;
+
+                        var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000);
+                        for (var channel = 0; channel < channels; channel++) {
+
+                            var nowBuffering = myAudioBuffer.getChannelData(channel);
+                            for (var i = 0; i < frameCount; i++) {
+                                var word = (byteData[i * 2] & 0xff) + ((byteData[i * 2 + 1] & 0xff) << 8);
+                                nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0;
+                            }
+                        }
+
+                        source.buffer = myAudioBuffer;
+                        source.connect(audioCtx.destination);
+                        source.start(lastStartTime);
+
+                        lastStartTime += myAudioBuffer.duration;
+
+                    } else {
+                        console.log('no files!');
                     }
-                }
+                };
 
-                source.buffer = myAudioBuffer;
-                source.connect(audioCtx.destination);
-                source.start(lastStartTime);
-
-                lastStartTime += myAudioBuffer.duration;
-
-            } else {
-                console.log('no files!');
             }
-        };
-
-    }
-</script>
-</body>
+        </script>
+    </body>
 </html>
