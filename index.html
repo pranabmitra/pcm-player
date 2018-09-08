@@ -62,76 +62,76 @@
 
                 /* using arrayBuffer */
                 
-                <!-- var url = 'test.pcm'; -->
-                <!-- var xhr = new XMLHttpRequest(); -->
-                <!-- xhr.open('GET', url, true); -->
-                <!-- xhr.responseType = 'arraybuffer'; -->
-                <!-- xhr.send(); -->
+                // var url = 'test.pcm';
+                // var xhr = new XMLHttpRequest();
+                // xhr.open('GET', url, true);
+                // xhr.responseType = 'arraybuffer';
+                // xhr.send();
 
-                <!-- xhr.onload = function(e) { -->
-                    <!-- if (xhr.status != 200) { -->
-                      <!-- alert("Unexpected status code " + xhr.status + " for " + url); -->
-                      <!-- return false; -->
-                    <!-- } -->
+                // xhr.onload = function(e) {
+                //     if (xhr.status != 200) {
+                //       alert("Unexpected status code " + xhr.status + " for " + url);
+                //       return false;
+                //     }
 
 
-                    <!-- var buf = new Uint8Array(xhr.response); -->
+                //     var buf = new Uint8Array(xhr.response);
 
-                    <!-- // Create an empty two second stereo buffer at the -->
-                    <!-- // sample rate of the AudioContext -->
-                    <!-- var frameCount = xhr.response.byteLength; // / 2; -->
+                //     // Create an empty two second stereo buffer at the
+                //     // sample rate of the AudioContext
+                //     var frameCount = xhr.response.byteLength; // / 2;
 
-                    <!-- var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000); -->
-                    <!-- for (var channel = 0; channel < channels; channel++) { -->
+                //     var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000);
+                //     for (var channel = 0; channel < channels; channel++) {
 
-                        <!-- var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000); -->
-                        <!-- for (var i = 0; i < frameCount; i++) { -->
-                            <!-- var word = (buf[i * 2] & 0xff) + ((buf[i * 2 + 1] & 0xff) << 8); -->
-                            <!-- nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0; -->
-                        <!-- } -->
-                    <!-- } -->
+                //         var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000);
+                //         for (var i = 0; i < frameCount; i++) {
+                //             var word = (buf[i * 2] & 0xff) + ((buf[i * 2 + 1] & 0xff) << 8);
+                //             nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0;
+                //         }
+                //     }
 
-                    <!-- source.buffer = myAudioBuffer; -->
-                    <!-- source.connect(audioCtx.destination); -->
-                    <!-- source.start(); -->
-               <!-- } -->
+                //     source.buffer = myAudioBuffer;
+                //     source.connect(audioCtx.destination);
+                //     source.start();
+                // }
 
 
                 /* using responseText */
 
-                <!-- var req = new XMLHttpRequest(); -->
-                <!-- var url = './test.pcm'; -->
-                <!-- req.open('GET', url, true); -->
-                <!-- req.overrideMimeType('text\/plain; charset=x-user-defined'); -->
-                <!-- req.onreadystatechange = function (aEvt) { -->
-                    <!-- if (req.readyState == 4) { -->
-                        <!-- if(req.status == 200) { -->
-                            <!-- var source = audioCtx.createBufferSource(); -->
-                            <!-- sounds[soundName] = req.responseText; -->
+                // var req = new XMLHttpRequest();
+                // var url = './test.pcm';
+                // req.open('GET', url, true);
+                // req.overrideMimeType('text\/plain; charset=x-user-defined');
+                // req.onreadystatechange = function (aEvt) {
+                //     if (req.readyState == 4) {
+                //         if(req.status == 200) {
+                //             var source = audioCtx.createBufferSource();
+                //             sounds[soundName] = req.responseText;
 
-                            <!-- // Create an empty two second stereo buffer at the -->
-                            <!-- // sample rate of the AudioContext -->
-                            <!-- var frameCount = sounds[soundName].length; // / 2; -->
+                //             // Create an empty two second stereo buffer at the
+                //             // sample rate of the AudioContext
+                //             var frameCount = sounds[soundName].length; // / 2;
 
-                            <!-- var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000); -->
-                            <!-- for (var channel = 0; channel < channels; channel++) { -->
+                //             var myAudioBuffer = audioCtx.createBuffer(channels, frameCount, 8000);
+                //             for (var channel = 0; channel < channels; channel++) {
 
-                                <!-- var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000); -->
-                                <!-- for (var i = 0; i < frameCount; i++) { -->
-                                    <!-- var word = (sounds[soundName].charCodeAt(i * 2) & 0xff) + ((sounds[soundName].charCodeAt(i * 2 + 1) & 0xff) << 8); -->
-                                    <!-- nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0; -->
-                                <!-- } -->
-                            <!-- } -->
+                //                 var nowBuffering = myAudioBuffer.getChannelData(channel, 16, 8000);
+                //                 for (var i = 0; i < frameCount; i++) {
+                //                     var word = (sounds[soundName].charCodeAt(i * 2) & 0xff) + ((sounds[soundName].charCodeAt(i * 2 + 1) & 0xff) << 8);
+                //                     nowBuffering[i] = ((word + 32768) % 65536 - 32768) / 32768.0;
+                //                 }
+                //             }
 
-                            <!-- source.buffer = myAudioBuffer; -->
-                            <!-- source.connect(audioCtx.destination); -->
-                            <!-- source.start(); -->
-                        <!-- } else { -->
-                            <!-- alert('failed loading audio'); -->
-                        <!-- } -->
-                    <!-- } -->
-                <!-- }; -->
-                <!-- req.send(null); -->
+                //             source.buffer = myAudioBuffer;
+                //             source.connect(audioCtx.destination);
+                //             source.start();
+                //         } else {
+                //             alert('failed loading audio');
+                //         }
+                //     }
+                // };
+                // req.send(null);
                 
 
                 /* Get data from node server */
