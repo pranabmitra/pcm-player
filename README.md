@@ -23,7 +23,7 @@ $ python -m SimpleHTTPServer 8001
 
 Python 3:
 ```sh
-$ Python 3 — python -m http.server 8001
+$ python3 -m http.server 8001
 ```
 
 Browse: http://localhost:8001/
